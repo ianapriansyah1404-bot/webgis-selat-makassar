@@ -1,1 +1,122 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebGIS Oseanografi Selat Makassar</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#eef5f8;color:#183247}
+header{background:#073b5c;color:white;padding:25px 6%}
+header h1{margin:0 0 8px;font-size:27px}
+header p{margin:0;color:#d8edf7}
+nav{background:#0b5578;padding:10px 4%;display:flex;flex-wrap:wrap;gap:6px}
+nav button{background:transparent;border:0;color:white;padding:12px;cursor:pointer;border-radius:5px}
+nav button:hover,nav button.active{background:#167ca5}
+main{max-width:1150px;margin:25px auto;padding:0 18px}
+section{display:none}
+section.active{display:block}
+.card{background:white;border-radius:12px;padding:22px;margin-bottom:18px;box-shadow:0 3px 12px #15384b12}
+h2{color:#075579;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.stat{background:#e0f2f8;border-radius:10px;padding:18px}
+.stat h3{margin-top:0;color:#075579}
+label{display:block;font-weight:bold;margin:12px 0 6px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #b7cbd5;border-radius:6px;font-size:15px}
+.action{background:#087ca5;color:white;border:0;padding:11px 17px;border-radius:6px;cursor:pointer;margin-top:12px}
+.mapbox{min-height:260px;background:linear-gradient(145deg,#c8e8ef,#e8f5f5);border:1px solid #b5d6df;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;color:#24546a}
+footer{text-align:center;padding:25px;background:#073b5c;color:white;margin-top:30px}
+small{color:#607985}
+</style>
+</head>
+<body>
+<header>
+<h1>WEBGIS OSEANOGRAFI</h1>
+<p>Analisis Suhu Permukaan Laut, Klorofil-a, Salinitas, dan Fenomena Oseanografi Selat Makassar | Januari–April</p>
+</header>
+<nav>
+<button class="active" onclick="showPage('home',this)">Beranda</button>
+<button onclick="showPage('about',this)">About / Metode</button>
+<button onclick="showPage('parameter',this)">Parameter Oseanografi</button>
+<button onclick="showPage('phenomena',this)">Fenomena Oseanografi</button>
+<button onclick="showPage('fishing',this)">Daerah Penangkapan Ikan</button>
+<button onclick="showPage('input',this)">Input Data</button>
+</nav>
+<main>
+<section id="home" class="active">
+<div class="card">
+<h2>Dashboard Oseanografi Selat Makassar</h2>
+<p>Portal informasi spasial untuk melihat parameter oseanografi dan mendukung kajian daerah potensial penangkapan ikan.</p>
+<div class="grid">
+<div class="stat"><h3>Suhu Permukaan Laut</h3><p>SST</p></div>
+<div class="stat"><h3>Klorofil-a</h3><p>Chlorophyll-a</p></div>
+<div class="stat"><h3>Salinitas</h3><p>SSS</p></div>
+<div class="stat"><h3>Periode Kajian</h3><p>Januari–April</p></div>
+</div>
+</div>
+<div class="card"><h2>Area Peta</h2><div class="mapbox">Area tampilan peta Selat Makassar<br>Data peta akan ditambahkan pada tahap berikutnya.</div></div>
+</section>
+<section id="about">
+<div class="card"><h2>About / Metode</h2>
+<p>WebGIS ini dirancang sebagai media visualisasi data oseanografi di Selat Makassar untuk periode Januari–April.</p>
+<h3>Parameter yang dikaji</h3><p>Suhu permukaan laut (SST), klorofil-a, dan salinitas permukaan laut (SSS), serta indikasi fenomena front oseanografi.</p>
+<h3>Metode umum</h3><p>Data spasial disiapkan, diperiksa sistem koordinatnya, kemudian ditampilkan dan dibandingkan berdasarkan parameter dan periode pengamatan. Interpretasi perlu mempertimbangkan sumber data, resolusi, dan waktu perekaman.</p>
+</div>
+</section>
+<section id="parameter">
+<div class="card"><h2>Parameter Oseanografi</h2>
+<label>Pilih parameter</label><select id="param" onchange="updateMap()"><option>Suhu Permukaan Laut (SST)</option><option>Klorofil-a</option><option>Salinitas (SSS)</option></select>
+<label>Pilih bulan</label><select id="month" onchange="updateMap()"><option>Januari</option><option>Februari</option><option>Maret</option><option>April</option></select>
+<div class="mapbox" id="maptext">Peta SST — Januari<br>Data peta belum dihubungkan.</div>
+<p><small>Catatan: tampilan ini masih berupa tempat penampung, bukan data raster aktual.</small></p>
+</div>
+</section>
+<section id="phenomena">
+<div class="card"><h2>Fenomena Oseanografi</h2>
+<div class="grid"><div class="stat"><h3>Front Suhu</h3><p>Zona perubahan suhu relatif tajam antarlokasi.</p></div><div class="stat"><h3>Front Salinitas</h3><p>Zona perubahan salinitas relatif tajam antarlokasi.</p></div></div>
+<div class="mapbox">Peta fenomena front akan ditambahkan setelah data tersedia.</div>
+</div>
+</section>
+<section id="fishing">
+<div class="card"><h2>Daerah Penangkapan Ikan</h2>
+<p>Halaman untuk kajian awal potensi daerah penangkapan ikan berdasarkan parameter oseanografi.</p>
+<div class="mapbox">Peta daerah potensial penangkapan ikan belum dihubungkan.</div>
+<p><small>Potensi penangkapan tidak dapat dipastikan dari placeholder ini; perlu analisis data oseanografi dan data hasil tangkapan.</small></p>
+</div>
+</section>
+<section id="input">
+<div class="card"><h2>Input Data Variabel</h2>
+<p>Formulir contoh untuk memasukkan catatan data. Data yang dikirim hanya ditampilkan pada halaman ini, belum tersimpan ke database.</p>
+<label>Parameter</label><select id="inparam"><option>SST</option><option>Klorofil-a</option><option>Salinitas</option><option>Front Suhu</option><option>Front Salinitas</option></select>
+<label>Bulan</label><select id="inmonth"><option>Januari</option><option>Februari</option><option>Maret</option><option>April</option></select>
+<label>Nilai / keterangan</label><input id="value" placeholder="Masukkan nilai atau keterangan">
+<label>Sumber data</label><input id="source" placeholder="Nama sumber data">
+<button class="action" onclick="submitData()">Tampilkan catatan</button>
+<div id="result"></div>
+</div>
+</section>
+</main>
+<footer>WebGIS Oseanografi Selat Makassar | Media pembelajaran dan visualisasi data</footer>
+<script>
+function showPage(id,btn){
+ document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+ window.scrollTo(0,0);
+}
+function updateMap(){
+ document.getElementById('maptext').innerHTML='Peta '+document.getElementById('param').value+' — '+document.getElementById('month').value+'<br>Data peta belum dihubungkan.';
+}
+function submitData(){
+ const p=document.getElementById('inparam').value;
+ const m=document.getElementById('inmonth').value;
+ const v=document.getElementById('value').value;
+ const s=document.getElementById('source').value;
+ document.getElementById('result').innerHTML='<div class="stat"><h3>Pratinjau catatan</h3><p>Parameter: '+escapeHTML(p)+'</p><p>Bulan: '+escapeHTML(m)+'</p><p>Nilai/keterangan: '+escapeHTML(v)+'</p><p>Sumber: '+escapeHTML(s)+'</p></div>';
+}
+function escapeHTML(t){return t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+</script>
+</body>
+</html>
